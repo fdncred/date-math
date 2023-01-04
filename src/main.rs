@@ -110,16 +110,16 @@ fn local_decompose(dur: HiDuration) -> (i8, f64, f64, f64, f64, f64, f64, f64, f
             // Everything should fit in the expected types now
             (
                 sign,
-                years.try_into().unwrap(),
-                months.try_into().unwrap(),
-                weeks.try_into().unwrap(),
-                days.try_into().unwrap(),
-                hours.try_into().unwrap(),
-                minutes.try_into().unwrap(),
-                seconds.try_into().unwrap(),
-                milliseconds.try_into().unwrap(),
-                microseconds.try_into().unwrap(),
-                ns_left.try_into().unwrap(),
+                years,
+                months,
+                weeks,
+                days,
+                hours,
+                minutes,
+                seconds,
+                milliseconds,
+                microseconds,
+                ns_left,
             )
         }
         Err(_) => {
@@ -144,16 +144,16 @@ fn local_decompose(dur: HiDuration) -> (i8, f64, f64, f64, f64, f64, f64, f64, f
             // Everything should fit in the expected types now
             (
                 sign,
-                (years as f64).try_into().unwrap(),
-                (months as f64).try_into().unwrap(),
-                (weeks as f64).try_into().unwrap(),
-                (days as f64).try_into().unwrap(),
-                (hours as f64).try_into().unwrap(),
-                (minutes as f64).try_into().unwrap(),
-                (seconds as f64).try_into().unwrap(),
-                (milliseconds as f64).try_into().unwrap(),
-                (microseconds as f64).try_into().unwrap(),
-                (ns_left as f64).try_into().unwrap(),
+                (years as f64),
+                (months as f64),
+                (weeks as f64),
+                (days as f64),
+                (hours as f64),
+                (minutes as f64),
+                (seconds as f64),
+                (milliseconds as f64),
+                (microseconds as f64),
+                (ns_left as f64),
             )
         }
     }
