@@ -1,6 +1,8 @@
 use chrono::NaiveDate;
 use chrono_humanize::{Accuracy, HumanTime, Tense};
 use hifitime::{Duration as HiDuration, Epoch};
+use humantime::{format_duration, parse_duration, parse_rfc3339};
+// use time::macros::datetime;
 
 #[allow(dead_code)]
 const DAYS_PER_CENTURY_U64: f64 = 36_525.0f64;
@@ -36,7 +38,22 @@ fn main() {
     let time = end - start;
     println!("Time: {:?}", time);
     let ht = HumanTime::from(time);
-    println!("{}", ht.to_text_en(Accuracy::Precise, Tense::Present));
+    println!(
+        "Humanize: {}",
+        ht.to_text_en(Accuracy::Precise, Tense::Present)
+    );
+    // let begin1 = datetime!(2019-05-10 21:59:12);
+    // let end1 = datetime!(2023-01-03 14:32:18);
+    // let sub1 = end1 - begin1;
+    // println!("Time: {:?}", sub1);
+
+    let begin = parse_rfc3339("2019-05-10T21:59:12Z").unwrap();
+    let end = parse_rfc3339("2023-01-03T14:32:18Z").unwrap();
+    let humantime_duration = end.duration_since(begin).unwrap();
+    println!(
+        "Humantime: {}",
+        format_duration(humantime_duration).to_string()
+    );
 
     let hi_start = Epoch::from_gregorian_utc_hms(2019, 5, 10, 21, 59, 12);
     let hi_end = Epoch::from_gregorian_utc_hms(2023, 1, 3, 14, 32, 18);
@@ -44,10 +61,10 @@ fn main() {
     let hi_time = hi_end - hi_start;
     println!("HiTime: {:?}", hi_time);
 
-    println!("{:?} decomposed", hi_time.decompose());
+    // println!("{:?} decomposed", hi_time.decompose());
     let (sign, days, hours, minutes, seconds, ms, us, ns) = hi_time.decompose();
     println!(
-        "{}{} days, {} hours, {} minutes, {} seconds, {} ms, {} us, {} ns",
+        "Decomp: {}{} days, {} hours, {} minutes, {} seconds, {} ms, {} us, {} ns",
         if sign == 0 { "+" } else { "-" },
         days,
         hours,
@@ -63,7 +80,7 @@ fn main() {
     let (sign, years, months, weeks, days, hours, minutes, seconds, ms, us, ns) =
         local_decompose(hi_time);
     println!(
-        "{}{} years, {} months, {} weeks, {} days, {} hours, {} minutes, {} seconds, {} ms, {} us, {} ns",
+        "LocalDecomp: {}{} years, {} months, {} weeks, {} days, {} hours, {} minutes, {} seconds, {} ms, {} us, {} ns",
         if sign == 0 { "+" } else { "-" },
         years,
         months,
@@ -183,3 +200,10 @@ fn local_decompose(dur: HiDuration) -> (i8, f64, f64, f64, f64, f64, f64, f64, f
 // +3 years, 7 months, 3 weeks, 3 days, 21 hours, 41 minutes, 48 seconds, 0 ms, 0 us, 0 ns
 
 // 3 years, 7 months, 23 days, 17 hours, 33 minutes, 6 seconds
+
+// Time: Duration { secs: 115230786, nanos: 0 }
+// Humanize: 3 years, 7 months, 4 weeks, 16 hours, 33 minutes and 6 seconds
+// Humantime: 3years 7months 24days 20h 37m 54s
+// HiTime: Duration { centuries: 0, nanoseconds: 115230786000000000 }
+// Decomp: +1333 days, 16 hours, 33 minutes, 6 seconds, 0 ms, 0 us, 0 ns
+// LocalDecomp: +3 years, 7 months, 3 weeks, 3 days, 21 hours, 41 minutes, 48 seconds, 0 ms, 0 us, 0 ns

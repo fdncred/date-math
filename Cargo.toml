@@ -1,7 +1,7 @@
 [package]
+edition = "2021"
 name = "date-math"
 version = "0.1.0"
-edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -9,3 +9,5 @@ edition = "2021"
 chrono = "0.4.23"
 chrono-humanize = "0.2.2"
 hifitime = "3.8.0"
+humantime = "2.1.0"
+# time = { version = "0.3.23", features = ["formatting", "macros"] }
